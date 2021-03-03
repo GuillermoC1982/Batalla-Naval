@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salvo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="/web/styles/styles.css">
+
+</head>
+<body>
+<div class="container">
+
+    <main id="app">
+        <h1>{{title}}</h1>
+        <div class="row">
+            <form v-show="player == null">
+                <label>Username: <input type="text" v-model:value="username"></label>
+                <label>Password:<input type="password" v-model:value="password"></label>
+                <button type="button" v-on:click="login">SignIn</button>
+                <button type="button" v-on:click="register">Register</button>
+
+            </form>
+            <div v-if="player != null">
+                <span> {{ player.username }}</span>
+                <button type="button" v-on:click="logout">SignOut</button>
+                <button type="button" v-on:click="createGame">Create Game</button>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="shadow p-3 mb-5  rounded mt-1">
+                        <ul>
+                            <li v-for="game in games">Game id {{game.id}} is at {{game.created}} and the players face:
+                                <button v-if="player != null && game.gamePlayers[0].playerId == player.id" v-on:click=reloadurl('http://localhost:8080/web/game.html?gp='+game.gamePlayers[0].gpId)>User Game Joined</button>
+                                <button v-else-if="player != null && game.gamePlayers[1] != null && game.gamePlayers[1].playerId == player.id" v-on:click=reloadurl('http://localhost:8080/web/game.html?gp='+game.gamePlayers[1].gpId)>User Game Joined</button>
+                                <button  v-if="player != null && game.gamePlayers.length == 1 && game.gamePlayers[0].playerId != player.id" v-on:click=joinGame(game.id)>Join Game</button>
+                                <ul>
+                                    <li v-for="gamePlayer in game.gamePlayers">Jugador id {{gamePlayer.gpid}}
+                                        User:{{gamePlayer.userName}}
+
+                                    </li>
+                                </ul>
+                                <br>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <td>User Name</td>
+                            <td>Total Score</td>
+                            <td>Win</td>
+                            <td>Lose</td>
+                            <td>Draw</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="userName in userNames">
+                            <td>{{userName.player}}</td>
+                            <td>{{userName.total}}</td>
+                            <td>{{userName.win}}</td>
+                            <td>{{userName.lose}}</td>
+                            <td>{{userName.draw}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </main>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+<script src="scripts/games.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+</body>
+
+
+</html>

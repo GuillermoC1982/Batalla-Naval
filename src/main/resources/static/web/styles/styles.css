@@ -1,0 +1,32 @@
+
+body{
+    background-image: url(/web/img/ships.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+h1{
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    font-family: fantasy;
+    text-align: center;
+}
+
+li{
+    color: #6eff00;
+    font-size: 0.8rem;
+    text-shadow: -2px 2px 1px #010204;
+    font-family: monospace;
+    background-color: #0b09334d;
+}
+
+table{
+    border-color: #8cf700;
+    border-style: solid;
+    border-width: 1.5px;
+    color: #0efe1f;
+    margin-top: 1.2rem;
+    background-color: #00000063;
+
+}

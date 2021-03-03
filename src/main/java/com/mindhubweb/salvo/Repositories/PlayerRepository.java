@@ -1,15 +1,14 @@
-package com.mindhubweb.salvo;
+package com.mindhubweb.salvo.Repositories;
 
 
+import com.mindhubweb.salvo.Models.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
-import java.util.List;
 
 
 @RepositoryRestResource
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-   List<Player> findByUserName(String userName);
+   Player findByUserName(String userName);
 
 }
 

@@ -1,11 +1,11 @@
-package com.mindhubweb.salvo;
+package com.mindhubweb.salvo.Models;
 
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Player {
@@ -16,20 +16,41 @@ public class Player {
     private long id;
 
     private String userName;
+    private String password;
+
+    @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
+    Set<GamePlayer> gamePlayers  = new HashSet<>();
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private final Set<Score> scores = new HashSet<>();
+
+    public void addGamePlayer(GamePlayer gamePlayer) {
+        gamePlayer.setPlayer(this);
+        gamePlayers.add(gamePlayer);
+    }
 
     public Player() { }
 
-    public Player(String userName) {
-        this.userName = userName;
-    }
+    public Player(String userName,String password) {
 
+        this.userName = userName;
+        this.password = password;
+    }
 
     public String getUserName() {
         return userName;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
 
@@ -55,4 +76,7 @@ public class Player {
         return Objects.hash(id, userName);
     }
 
+    public Score getScore(Game game) {
+        return this.scores.stream().filter(score -> score.getGame().equals(game)).findFirst().orElse(null);
+    }
 }

@@ -1,0 +1,124 @@
+
+
+.Submarine{
+     background-image: url(/web/img/submarine.jpg);
+     background-size: cover;
+     background-position-x: center;
+}
+
+.Destroyer{
+     background-image: url(/web/img/destroyer.jpg);
+     background-size: cover;
+     background-position-x: center;
+
+}
+
+.Carrier{
+     background-image: url(/web/img/carrier.jpg);
+     background-size: cover;
+     background-position-x: center;
+}
+
+.Patrol_Boat{
+     background-image: url(/web/img/patrolt.jpg);
+     background-size: cover;
+     background-position-x: center;
+}
+
+.Battleship{
+     background-image: url(/web/img/battleship.jpg);
+     background-size: cover;
+     background-position-x: center;
+}
+.hit{
+     background-image: url(/web/img/hit.jpg);
+     background-size: cover;
+     background-position-x: center;
+     text-align: center;
+}
+
+.salvo{
+    background-color: yellow;
+}
+.salvos{
+    background-color: blue;
+    text-align: center;
+}
+.sink{
+     background-image: url(/web/img/sunk.jpg);
+     background-size: 5rem;
+     background-position-y: -1rem;
+     color: black;
+}
+
+
+#shipsTable td{
+    width: 1.rem;
+    background-color: white;
+    text-align: center;
+}
+
+.w-50{
+        margin-left: 4rem;
+}
+
+#sunkShip{
+    margin-left: 1rem;
+    text-align: center;
+    background-image: url(/web/img/a4326511c7d15b66d302cb8639c9c1c7.jpg);
+    font-family: fantasy;
+    background-position-y: -2rem;
+}
+
+table{
+
+    border: double;
+    background-image: url(/web/img/2.jpg);
+    background-size: cover;
+
+}
+
+.mt-2{
+     margin-left: 3rem;
+}
+
+h1{
+     font-size: 2.7rem;
+     font-family: fantasy;
+     margin-left: 5rem;
+}
+
+h2{
+    margin-left: 1rem;
+    color: white;
+    font-family: fantasy;
+}
+
+tr{
+    border-color: inherit;
+    border: double;
+}
+
+td{
+    border-color: inherit;
+    border: double;
+    width: 2rem;
+}
+
+.orientation{
+    margin-left: 6rem;
+}
+ body{
+     background-image: url(/web/img/wall2.jpg);
+     background-size: cover;
+     background-repeat: no-repeat;
+     min-height: 100vh;
+ }
+
+ .vs{
+     text-align: center;
+     font-family: fantasy;
+     font-size: x-large;
+ }
+
+ button

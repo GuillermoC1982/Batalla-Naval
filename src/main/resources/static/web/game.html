@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salvo Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="/web/styles/gameStyles.css">
+</head>
+    <body>
+
+        <h1>Salvo Game</h1>
+        <div id="app" class="m-2">
+            <button type="button" v-on:click=reloadurl('/web/games.html')>Back to Home</button>
+            <button type="button" v-on:click="logout">SignOut</button>
+            <div class="vs">
+                User:<p>{{players.viewer !=null ? players.viewer.userName : ''}}</p><BR>
+                VS:<p>{{ players.enemy != null ? players.enemy.userName : 'Waiting for opponent'}} </p>
+            </div>
+            <div class="orientation" v-if="gameView.ships.length < 5">
+                <input type="radio" v-model:value="orientationSel" id="orientationSel_hor" value="hor"><label for="orientationSel_hor">Horizontal</label>
+                <input type="radio" v-model:value="orientationSel" id="orientationSel_ver" value="ver"><label for="orientationSel_ver">Vertical</label>
+                <button type="button" class="btn btn-primary" v-on:click="addships()">Save ship formation</button>
+            </div>
+            <div v-if="gameView.ships.length == 5">
+                <button type="button" class="btn btn-danger" v-show="gameView != null && gameView.status == 'FIRE'" v-on:click="addsalvos()">Fire your shots!!</button>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col" justify-content-center>
+                    <table id="shipsTable" class="w-50" v-show="gameView != null && gameView.status == 'PLACE_SHIPS'">
+                        <thead>
+                            <tr>
+                                <td>Number</td>
+                                <td>Ship Type</td>
+                                <td>Lenght</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="shipType in shipTypes">
+                            <td>{{shipType.canMax}}</td>
+                            <td><input type="radio" name="ship" :disabled="shipType.disabled" v-model="shipSel" :id="shipType.type" :value="shipType"><label :for="shipType.type">{{shipType.type}}</label> </td>
+                            <td>{{shipType.length}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-2">
+
+                <div class="col col-sm-12 col-lg-6">
+                    <h2>Your ships table</h2>
+                    <table border="1" class="w-75">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td v-for="column in columns">{{column}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in rows">
+                                <td>{{row}}</td>
+                                <td v-for="column in columns" v-bind:id="row+column" v-on:click="placeShips(row, column)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col col-sm-12 col-lg-6">
+                    <h2>Salvos table</h2>
+                    <table border="1" class="w-75">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td v-for="column in columns">{{column}}</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="row in rows">
+                            <td>{{row}}</td>
+                            <td v-for="column in columns" v-bind:id="'S' + row+column" v-on:click="placeSalvos(row, column)"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row mt-4" >
+                    <table border="1" class="w-50" id="sunkShip">
+                        <thead>
+                        <tr>
+                            <td><b>Sunken Enemy Ships</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="shipSink in shipSinks">
+                            <td>{{shipSink}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <h2>{{status}}</h2>
+                    <pre id="divJson">
+                    </pre>
+                </div>
+            </div>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="scripts/game.js"></script>
+
+    </body>
+</html>
