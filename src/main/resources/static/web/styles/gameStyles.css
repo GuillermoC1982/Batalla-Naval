@@ -34,6 +34,7 @@
      background-image: url(/web/img/hit.jpg);
      background-size: cover;
      background-position-x: center;
+     background-position-y: center;
      text-align: center;
 }
 
@@ -51,11 +52,17 @@
      color: black;
 }
 
-
+#shipsTable{
+    background-image: url(/web/img/yamato.jpg);
+    text-shadow: 1px -1px 5px whitesmoke;
+    background-position-y: center;
+    font-size: x-large;
+    font-family: fantasy;
+}
 #shipsTable td{
     width: 1.rem;
-    background-color: white;
     text-align: center;
+
 }
 
 .w-50{
@@ -63,11 +70,13 @@
 }
 
 #sunkShip{
-    margin-left: 1rem;
+    margin-left: -1.4rem;
+    width: 20.3rem;
     text-align: center;
     background-image: url(/web/img/a4326511c7d15b66d302cb8639c9c1c7.jpg);
     font-family: fantasy;
     background-position-y: -2rem;
+    text-shadow: 1px -1px 5px whitesmoke;
 }
 
 table{
@@ -75,11 +84,23 @@ table{
     border: double;
     background-image: url(/web/img/2.jpg);
     background-size: cover;
+    margin-left: -2rem;
+}
 
+label{
+    font-family: fantasy;
+    text-shadow: 1px -1px 5px whitesmoke;
 }
 
 .mt-2{
      margin-left: 3rem;
+}
+
+.btn-danger{
+    color: #fff;
+    background-color: #af2020;
+    border-color: #3f0c11;
+    margin-left: 7rem;
 }
 
 h1{
@@ -92,6 +113,7 @@ h2{
     margin-left: 1rem;
     color: white;
     font-family: fantasy;
+    text-shadow: -4px 3px black;
 }
 
 tr{
@@ -102,7 +124,7 @@ tr{
 td{
     border-color: inherit;
     border: double;
-    width: 2rem;
+    width:2.8rem;;
 }
 
 .orientation{
@@ -116,9 +138,21 @@ td{
  }
 
  .vs{
+     background-image: url(/web/img/title.png);
+     background-size: 21rem;
+     background-position-y: center;
+     background-repeat: no-repeat;
+     background-position-x: center;
      text-align: center;
      font-family: fantasy;
      font-size: x-large;
+     font-family: fantasy;
+     font-size: large;
+     text-shadow: 1px -1px 5px whitesmoke;
+     margin-left: 1rem;
  }
 
- button
+button{
+    font-family: fantasy;
+}
+

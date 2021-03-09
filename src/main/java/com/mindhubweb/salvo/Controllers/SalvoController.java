@@ -69,11 +69,11 @@ public class SalvoController {
     public ResponseEntity<Object> register(@RequestParam String username, @RequestParam String password) {
 
         if (username.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(AppMessages.MSG_MISSING_DATA, HttpStatus.FORBIDDEN);
         }
 
         if (playerRepository.findByUserName(username) != null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(AppMessages.MSG_NAME_IN_USE, HttpStatus.FORBIDDEN);
         }
 
         playerRepository.save(new Player(username, passwordEncoder.encode(password)));
@@ -88,7 +88,7 @@ public class SalvoController {
             return new ResponseEntity<>(makeGamePlayerView(gamePlayer), HttpStatus.ACCEPTED);
         }
         else{
-            return new ResponseEntity<>(makeMap("error", "Access denied"),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_ACCES_DENIED),HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -97,7 +97,7 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> createGame(Authentication authentication){
         ResponseEntity<Map<String, Object>> response;
         if(isGuest(authentication)){
-            response = new ResponseEntity<>(makeMap("error", "Unauthenticated user"), HttpStatus.FORBIDDEN);
+            response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_UNAUTHENTICATED_USER), HttpStatus.FORBIDDEN);
         } else {
             Player player = playerRepository.findByUserName(authentication.getName());
             Game newGame = gameRepository.save(new Game());
@@ -112,13 +112,13 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> joinGame(Authentication authentication, @PathVariable long gameId){
         ResponseEntity<Map<String, Object>> response;
         if(isGuest(authentication)) {
-            response = new ResponseEntity<>(makeMap("error", "Unauthenticated user"), HttpStatus.UNAUTHORIZED);
+            response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_UNAUTHENTICATED_USER), HttpStatus.UNAUTHORIZED);
         }else {
             Optional<Game> game = gameRepository.findById(gameId);
             if(game.isEmpty()){
-                response = new ResponseEntity<>(makeMap("error", "Game don't exist"), HttpStatus.NOT_FOUND);
+                response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NO_EXIST_GAME), HttpStatus.NOT_FOUND);
             }else if(game.get().getGamePlayers().size() == 2){
-                return new ResponseEntity<>(makeMap("error", "Game full"), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_ACCES_DENIED), HttpStatus.FORBIDDEN);
             }else{
                 Player player = playerRepository.findByUserName(authentication.getName());
                 if (! game.get().getPlayers().contains(player)){
@@ -126,7 +126,7 @@ public class SalvoController {
                     GamePlayer newGamePlayer = gamePlayerRepository.save(new GamePlayer(game.get(), player));
                     response = new ResponseEntity<>(makeMap("gpId", newGamePlayer.getId()), HttpStatus.ACCEPTED);
                 }else{
-                    response = new ResponseEntity<>(makeMap("error", "can't play with yourself!"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_DUMB), HttpStatus.FORBIDDEN);
                 }
 
             }
@@ -139,18 +139,18 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> addShips(Authentication authentication,@PathVariable long gamePlayerId, @RequestBody List<Ship> ships){
         ResponseEntity<Map<String, Object>> response;
         if (isGuest(authentication)) {
-            response = new ResponseEntity<>(makeMap("error", "Unauthenticated user"), HttpStatus.UNAUTHORIZED);
+            response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_UNAUTHENTICATED_USER), HttpStatus.UNAUTHORIZED);
         }else{
             Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
             Player player = playerRepository.findByUserName(authentication.getName());
             if(gamePlayer.isEmpty()){
-                response = new ResponseEntity<>(makeMap("error", "GamePlayer don't exist"), HttpStatus.NOT_FOUND);
+                response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NO_EXIST_GAMEPLAYER), HttpStatus.NOT_FOUND);
             }else if (gamePlayer.get().getPlayer().getId() != player.getId()){
-                    response = new ResponseEntity<>(makeMap("error", "Not your game"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NOT_YOUR_GAME), HttpStatus.FORBIDDEN);
             }else if(gamePlayer.get().getShips().size()> 0){
-                    response = new ResponseEntity<>(makeMap("error" , "Yo already have ships"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR , AppMessages.MSG_ALREADY_HAVE_SHIPS), HttpStatus.FORBIDDEN);
             }else if(ships.size() != 5){
-                    response = new ResponseEntity<>(makeMap("error" , "you must have 5 ships"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR , AppMessages.MSG_MUST_HAVE_5_SHIPS), HttpStatus.FORBIDDEN);
             }
             else{
                 /*for(int i = 0 ; i < ships.size() ; i++){
@@ -162,7 +162,7 @@ public class SalvoController {
                 });
 
                 shipRepository.saveAll(ships);
-                response = new ResponseEntity<>(makeMap("success" , "ships added"),HttpStatus.ACCEPTED);
+                response = new ResponseEntity<>(makeMap(AppMessages.KEY_SUCCESS , AppMessages.MSG_SHIPS_ADDED),HttpStatus.ACCEPTED);
             }
 
         }
@@ -174,26 +174,26 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> addSalvos(Authentication authentication, @PathVariable long gamePlayerId, @RequestBody Salvo salvo){
         ResponseEntity<Map<String, Object>> response;
         if (isGuest(authentication)) {
-            response = new ResponseEntity<>(makeMap("error", "Unauthenticated user"), HttpStatus.UNAUTHORIZED);
+            response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_UNAUTHENTICATED_USER), HttpStatus.UNAUTHORIZED);
         }else{
             Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
             Player player = playerRepository.findByUserName(authentication.getName());
             Optional<GamePlayer> oponent = gamePlayer.get().getOponent();
 
             if(gamePlayer.isEmpty()){
-                response = new ResponseEntity<>(makeMap("error", "GamePlayer don't exist"), HttpStatus.NOT_FOUND);
+                response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NO_EXIST_GAMEPLAYER), HttpStatus.NOT_FOUND);
             }else if (gamePlayer.get().getPlayer().getId() != player.getId()) {
-                response = new ResponseEntity<>(makeMap("error", "Not your game"), HttpStatus.FORBIDDEN);
+                response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_ACCES_DENIED), HttpStatus.FORBIDDEN);
             }else {
                 int iSafeShips = 5 - gamePlayer.get().getSunkenShips(salvo.getTurn()).size();
                 if (salvo.getTurn() - 1 != gamePlayer.get().getSalvos().size()) {
-                    response = new ResponseEntity<>(makeMap("error", "It's not a valid turn"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NO_VALID_TURN), HttpStatus.FORBIDDEN);
                 } else if (oponent.isEmpty()) {
-                    return new ResponseEntity<>(makeMap("error", "Wait for your oponent"), HttpStatus.FORBIDDEN);
+                    return new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_WAIT_FOR_OPONENT), HttpStatus.FORBIDDEN);
                 } else if (salvo.getSalvoLocations().size() != iSafeShips && oponent.get().getSalvos().size() == gamePlayer.get().getSalvos().size()) {
-                    response = new ResponseEntity<>(makeMap("error", "you must fire " + iSafeShips + " shots"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, "you must fire " + iSafeShips + " shots"), HttpStatus.FORBIDDEN);
                 } else if (gamePlayer.get().getStatus() != GameStatus.FIRE){
-                    response = new ResponseEntity<>(makeMap("error", "Wait for your turn"), HttpStatus.FORBIDDEN);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_ERROR, AppMessages.MSG_NO_VALID_TURN), HttpStatus.FORBIDDEN);
                 }
                 else {
                     salvo.setGamePlayer(gamePlayer.get());
@@ -212,7 +212,7 @@ public class SalvoController {
                         scoreRepository.save(new Score(0.5,LocalDateTime.now(),oponent.get().getPlayer(),oponent.get().getGame()));
                     }
 
-                    response = new ResponseEntity<>(makeMap("success", "salvo added"), HttpStatus.ACCEPTED);
+                    response = new ResponseEntity<>(makeMap(AppMessages.KEY_SUCCESS, AppMessages.MSG_SALVO_ADDED), HttpStatus.ACCEPTED);
                 }
             }
 

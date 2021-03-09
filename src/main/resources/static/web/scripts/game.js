@@ -88,11 +88,12 @@ var gamesVue = new Vue({
             }
             else
             {   //tiro nuevo
-                var iSinkShips = 5 - gamesVue.gameView.gamePlayers.find(x => x.gpId == gp).shipSinks.length;
-                /*var oponentSalvos = gamesVue.gameView.gamePlayers.find(x => x.gpId != gp).salvos.length;
-                var gpSalvos = gamesVue.gameView.gamePlayers.find(x => x.gpId == gp).salvos.length;*/
+                //la idea es traerse el ultimo salvo del enemigo que sea anterior al turno en el que está el player, asi si player está en el turno 1 no va a encontrarlo y por ende la resta sería de 0. Y si lo encuentra se haría la resta con los hundidos del turno que corresponda
+                var turn = gamesVue.getNextTurno(gp);
+                                var sunks = new Set(gamesVue.gameView.salvos.filter(x => x.idGamePlayer != gp && x.turn <turn).flatMap( tsalvo => tsalvo.sinks).map(sinks => sinks.shipType));
+                                var iSinkShips = 5 - sunks.size;
 
-                if(gamesVue.turnoSalvoLocations.salvoLocations.length == iSinkShips /*&& oponentSalvos == gpSalvos*/ ){
+                if(gamesVue.turnoSalvoLocations.salvoLocations.length == iSinkShips ){
                     alert('You only have ' + iSinkShips + ' shots');
                     return;
                 }

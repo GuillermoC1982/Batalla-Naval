@@ -1,7 +1,7 @@
 var gamesVue = new Vue({
     el:"#app",
     data:{
-        title:"Games Salvo Created",
+        title:"Game Strategic Salvo",
         games:[],
         userNames:[],
         username:null,

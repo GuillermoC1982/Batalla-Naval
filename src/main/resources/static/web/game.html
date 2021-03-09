@@ -14,13 +14,13 @@
             <button type="button" v-on:click=reloadurl('/web/games.html')>Back to Home</button>
             <button type="button" v-on:click="logout">SignOut</button>
             <div class="vs">
-                User:<p>{{players.viewer !=null ? players.viewer.userName : ''}}</p><BR>
+                User:<p>{{players.viewer !=null ? players.viewer.userName : ''}}</p>
                 VS:<p>{{ players.enemy != null ? players.enemy.userName : 'Waiting for opponent'}} </p>
             </div>
             <div class="orientation" v-if="gameView.ships.length < 5">
                 <input type="radio" v-model:value="orientationSel" id="orientationSel_hor" value="hor"><label for="orientationSel_hor">Horizontal</label>
                 <input type="radio" v-model:value="orientationSel" id="orientationSel_ver" value="ver"><label for="orientationSel_ver">Vertical</label>
-                <button type="button" class="btn btn-primary" v-on:click="addships()">Save ship formation</button>
+                <button type="button"  v-on:click="addships()">Save ship formation</button>
             </div>
             <div v-if="gameView.ships.length == 5">
                 <button type="button" class="btn btn-danger" v-show="gameView != null && gameView.status == 'FIRE'" v-on:click="addsalvos()">Fire your shots!!</button>
@@ -50,7 +50,7 @@
 
                 <div class="col col-sm-12 col-lg-6">
                     <h2>Your ships table</h2>
-                    <table border="1" class="w-75">
+                    <table border="1" >
                         <thead>
                             <tr>
                                 <td></td>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col col-sm-12 col-lg-6">
                     <h2>Salvos table</h2>
-                    <table border="1" class="w-75">
+                    <table border="1" >
                         <thead>
                         <tr>
                             <td></td>
@@ -83,7 +83,7 @@
                     </table>
                 </div>
                 <div class="row mt-4" >
-                    <table border="1" class="w-50" id="sunkShip">
+                    <table border="1"  id="sunkShip">
                         <thead>
                         <tr>
                             <td><b>Sunken Enemy Ships</b></td>

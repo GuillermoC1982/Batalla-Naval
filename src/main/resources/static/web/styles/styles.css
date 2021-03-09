@@ -11,22 +11,63 @@ h1{
     margin-top: 1rem;
     font-family: fantasy;
     text-align: center;
+    color: black;
+    text-shadow: -2px 1px #eee5e5;
 }
 
 li{
     color: #6eff00;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-shadow: -2px 2px 1px #010204;
     font-family: monospace;
     background-color: #0b09334d;
 }
 
+#lista{
+    overflow: auto;
+    width: 29rem;
+    height: 23rem;
+}
+
+span{
+    text-shadow: 1px -1px 5px whitesmoke;
+    font-family: auto;
+    font-size: 2rem;
+}
+
 table{
-    border-color: #8cf700;
+    border-color: #000000;
     border-style: solid;
     border-width: 1.5px;
-    color: #0efe1f;
+    color: #141619;
     margin-top: 1.2rem;
-    background-color: #00000063;
+    background-image: url(/web/img/eagle.jpg);
+    background-size: cover;
+    font-family: fantasy;
+    font-size: large;
+    text-shadow: 1px -1px 5px whitesmoke;
+    width: 33rem;
+    height: 15rem;
 
+}
+
+td{
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+}
+
+button{
+    font-family: fantasy;
+}
+
+.titleImg{
+    width: 33rem;
+}
+
+label{
+    display: inline-block;
+    font-family: cursive;
+    font-size: 1.3rem;
+    text-shadow: 1px -1px 5px whitesmoke;
 }

@@ -14,6 +14,9 @@
 <div class="container">
 
     <main id="app">
+        <div class="row">
+        <img src="/web/img/title2.png" class="titleImg" width="400"/>
+        </div>
         <h1>{{title}}</h1>
         <div class="row">
             <form v-show="player == null">
@@ -28,8 +31,8 @@
                 <button type="button" v-on:click="logout">SignOut</button>
                 <button type="button" v-on:click="createGame">Create Game</button>
             </div>
-            <div class="row">
-                <div class="col-12 col-sm-6">
+            <div class="row mt-5">
+                <div class="col-12 col-sm-6" id="lista">
                     <div class="shadow p-3 mb-5  rounded mt-1">
                         <ul>
                             <li v-for="game in games">Game id {{game.id}} is at {{game.created}} and the players face:
